@@ -60,7 +60,6 @@
                                                 <th>Title</th>
                                                 <th>State</th>
                                                 <th>Last Update</th>
-                                                <th>Priority</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -80,7 +79,6 @@
                                                     <td><span class="badge badge-secondary">{{ x.state }}</span></td>
                                                 {% endif %}
                                                 <td>{{ x.lastUpdate }}</td>
-                                                <td>{{ x.priority }}</td>
                                                 <td><a class="btn btn-outline-primary mb-3" href="{% url 'ticket details' ticket_id=x.id %}" role="button">View</a></td>
                                             </tr>
                                             {% endfor %}

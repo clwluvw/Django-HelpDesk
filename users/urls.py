@@ -3,7 +3,8 @@ from django.urls import include, path
 from users import views
 
 urlpatterns = [
-    path('', views.Profile.as_view(), name='profile'),
+    path('', views.index, name='profile'),
+    path('accounts/login/', views.SigninView.as_view(), name='login'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('register/', views.RegisterView.as_view(), name='register'),
 ]

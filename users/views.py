@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from users.forms import RegisterForm, LoginForm
 from django.contrib.auth import login, authenticate
 from django.views.generic import TemplateView
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from tickets.models import Ticket
@@ -13,6 +13,11 @@ def is_member(user, *group_names):
         if bool(user.groups.filter(name__in=group_names)):
             return True
     return False  
+
+def index(request):
+    if request.user.is_authenticated:
+        return Profile.as_view()(request)
+    return redirect("login")
 
 class RegisterView(TemplateView):
     template_name = "registration/register.html"
@@ -34,6 +39,14 @@ class SigninView(LoginView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        just_logged_out = False
+        try:
+            if self.request.GET['ref'] == "logout":
+                just_logged_out = True
+        except:
+            pass
+        print(just_logged_out)
+        context['just_logged_out'] = just_logged_out
         if self.request.method == "GET":
             context['form'] = LoginForm()
         return context

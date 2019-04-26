@@ -45,6 +45,13 @@
                         <p>Hello there, Sign in and start managing your Admin Template</p>
                     </div>
                     <div class="login-form-body">
+
+                        {% if just_logged_out %}
+                        <div class="alert alert-success" role="alert">
+                            You have successfully logged out
+                        </div>
+                        {% endif %}
+
                         {% if form.errors %}
                         <div class="alert alert-danger form-gp" role="alert">
                             Your username and password didn't match. Please try again.
