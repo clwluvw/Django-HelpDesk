@@ -2038,7 +2038,8 @@ label {
         flex-basis: calc(100% * (1/4));
 }
 
-.icon-container [class^="ti-"] {
+.icon-container [class^="ti-"],
+.submenu [class^="ti-"] {
     width: 30px;
     font-size: 14px;
     display: inline-block;

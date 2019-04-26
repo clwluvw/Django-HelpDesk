@@ -1,9 +1,18 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from users.forms import *
+from users.forms import RegisterForm, LoginForm
 from django.contrib.auth import login, authenticate
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LoginView
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from tickets.models import Ticket
+
+def is_member(user, *group_names):
+    if user.is_authenticated:
+        if bool(user.groups.filter(name__in=group_names)):
+            return True
+    return False  
 
 class RegisterView(TemplateView):
     template_name = "registration/register.html"
@@ -33,3 +42,24 @@ class SigninView(LoginView):
         # if not self.request.POST['remember_me']:
         #     self.request.session.set_expiry(0)
         return super().post(request, *args, **kwargs)
+
+class Profile(TemplateView):
+    template_name = "registration/profile.html"
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if is_member(self.request.user, 'clients'):
+            tickets = Ticket.objects.filter(creator=self.request.user)
+        else:
+            tickets = Ticket.objects.all()
+        context['total_tickets'] = tickets.count()
+        context['answered_tickets'] = tickets.filter(state="Answered").count()
+        context['wfr_tickets'] = tickets.filter(state="Waiting for response").count()
+        context['closed_tickets'] = tickets.filter(state="Closed").count()
+
+        context['user_name'] = str(self.request.user)
+        return context
