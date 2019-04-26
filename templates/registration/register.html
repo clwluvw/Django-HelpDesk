@@ -1,0 +1,131 @@
+<!doctype html>
+{% load static %}
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Sign up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="{% static 'dashboard/images/icon/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/metisMenu.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/slicknav.min.css' %}">
+    <!-- amchart css -->
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    <!-- others css -->
+    <link rel="stylesheet" href="{% static 'dashboard/css/typography.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/default-css.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/responsive.css' %}">
+    <!-- modernizr css -->
+    <script src="{% static 'dashboard/js/vendor/modernizr-2.8.3.min.js' %}"></script>
+</head>
+
+<body>
+    <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <!-- preloader area start -->
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <!-- preloader area end -->
+    <!-- login area start -->
+    <div class="login-area login-bg">
+        <div class="container">
+            <div class="login-box ptb--100">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="login-form-head">
+                        <h4>Sign up</h4>
+                        <p>Hello there, Sign up and Join with Us</p>
+                    </div>
+                    <div class="login-form-body">
+                        {% if form.non_field_errors %}
+                        <div class="alert alert-danger form-gp" role="alert">
+                            {% for error in form.non_field_errors %}
+                                {{ error|escape }}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        <div class="form-gp">
+                            <label for="id_first_name">First Name</label>
+                            <input type="text" id="first_name" name="first_name" value="{{ form.first_name.value }}">
+                            <i class="ti-user"></i>
+                        </div>
+                        {% if form.first_name.errors %}
+                            <div class="form-gp errors"><span>{{ form.first_name.errors.as_text }}</span></div>
+                        {% endif %}
+                        <div class="form-gp">
+                            <label for="id_last_name">Last Name</label>
+                            <input type="text" id="last_name" name="last_name" value="{{ form.last_name.value }}">
+                            <i class="ti-user"></i>
+                        </div>
+                        {% if form.last_name.errors %}
+                            <div class="form-gp errors"><span>{{ form.last_name.errors.as_text }}</span></div>
+                        {% endif %}
+                        <div class="form-gp">
+                            <label for="id_username">Username</label>
+                            <input type="text" id="username" name="username" value="{{ form.username.value }}">
+                            <i class="ti-user"></i>
+                        </div>
+                        {% if form.username.errors %}
+                            <div class="form-gp errors"><span>{{ form.username.errors.as_text }}</span></div>
+                        {% endif %}
+                        <div class="form-gp">
+                            <label for="id_email">Email address</label>
+                            <input type="email" id="email" name="email" value="{{ form.email.value }}">
+                            <i class="ti-email"></i>
+                        </div>
+                        {% if form.email.errors %}
+                            <div class="form-gp errors"><span>{{ form.email.errors.as_text }}</span></div>
+                        {% endif %}
+                        <div class="form-gp">
+                            <label for="id_password1">Password</label>
+                            <input type="password" id="password1" name="password1">
+                            <i class="ti-lock"></i>
+                        </div>
+                        {% if form.password1.errors %}
+                            <div class="form-gp errors"><span>{{ form.password1.errors.as_text }}</span></div>
+                        {% endif %}
+                        <div class="form-gp">
+                            <label for="id_password2">Confirm Password</label>
+                            <input type="password" id="password2" name="password2">
+                            <i class="ti-lock"></i>
+                        </div>
+                        {% if form.password2.errors %}
+                            <div class="form-gp errors"><span>{{ form.password2.errors.as_text }}</span></div>
+                        {% endif %}
+                        <div class="submit-btn-area">
+                            <button id="form_submit" type="submit">Submit <i class="ti-arrow-right"></i></button>
+                        </div>
+                        <div class="form-footer text-center mt-5">
+                            <p class="text-muted">Already a member? <a href="{% url 'login' %}">Sign in</a></p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- login area end -->
+
+    <!-- jquery latest version -->
+    <script src="{% static 'dashboard/js/vendor/jquery-2.2.4.min.js' %}"></script>
+    <!-- bootstrap 4 js -->
+    <script src="{% static 'dashboard/js/popper.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/metisMenu.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/jquery.slimscroll.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/jquery.slicknav.min.js' %}"></script>
+    
+    <!-- others plugins -->
+    <script src="{% static 'dashboard/js/plugins.js' %}"></script>
+    <script src="{% static 'dashboard/js/scripts.js' %}"></script>
+</body>
+
+</html>
