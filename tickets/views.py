@@ -33,7 +33,7 @@ class NewTicket(TemplateView):
         return context
     
     def post(self, request):
-        ticketForm = TicketForm(request.POST)
+        ticketForm = TicketForm(request.POST, request=request)
         commentForm = CommentForm(request.POST)
 
         if ticketForm.is_valid() and commentForm.is_valid():
@@ -85,6 +85,7 @@ class TicketDetails(ListView):
         context = super().get_context_data(**kwargs)
         context['commentForm'] = CommentForm()
         context['ticket'] = Ticket.objects.get(id=self.kwargs['ticket_id'])
+        context['is_support'] = self.request.user.has_perm('users.support')
         context['user_name'] = str(self.request.user)
         return context
     
@@ -93,9 +94,10 @@ class TicketDetails(ListView):
         if commentForm.is_valid():
             commentForm.save(request, Ticket.objects.get(id=kwargs['ticket_id']))
             return self.get(request, kwargs)
-        context = self.get_context_data() #check for error on empty message
+        self.get(request, *args, **kwargs)
+        context = self.get_context_data(**kwargs) #check for error on empty message
         context['commentForm'] = commentForm
-        return render(request, template_name, context)
+        return render(request, self.template_name, context)
     
     def get(self, request, *args, **kwargs):
         close_state = request.GET.get('close', None)

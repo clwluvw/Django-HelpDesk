@@ -4,7 +4,7 @@ from django.utils import timezone
 
 class Ticket(models.Model):
     title = models.CharField(max_length=254, default="") #check for default value
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     dateTime = models.DateTimeField(default=timezone.now)
     lastUpdate = models.DateTimeField(auto_now=True)
 
@@ -30,4 +30,3 @@ class Comment(models.Model):
     from_owner = models.BooleanField(default=True)
     comment = models.TextField(blank=False, default="")
     dateTime = models.DateTimeField(auto_now=True)
-    attach = models.ImageField(blank=True)

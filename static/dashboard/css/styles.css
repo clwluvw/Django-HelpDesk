@@ -1350,11 +1350,6 @@ table.dbkit-table tr td {
     letter-spacing: 0;
 }
 
-.seo-fact #seolinechart3,
-.seo-fact #seolinechart4 {
-    max-width: 200px;
-}
-
 /* socialads */
 
 .highcharts-credits {

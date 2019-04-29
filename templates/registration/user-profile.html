@@ -1,0 +1,99 @@
+<!doctype html>
+{% load static %}
+<html class="no-js" lang="en">
+
+<head>
+    {% include "../tickets/base/head.html" with title="Edit Profile" %}
+</head>
+
+<body class="body-bg">
+    <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <!-- preloader area start -->
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <!-- preloader area end -->
+    <!-- page container area start -->
+    <div class="horizontal-main-wrapper">
+        {% include '../tickets/base/header.html' with name=user_name %}
+        <!-- main content area start -->
+        <div class="main-content">
+            <div class="main-content-inner">
+                <div class="container">
+                    <div class="row">
+                        <!-- basic form start -->
+                        <div class="col-12 mt-5">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="header-title">Edit Profile</h4>
+                                    {% if message %}
+                                    <div class="alert alert-success" role="alert">
+                                        {{ message }}
+                                    </div>
+                                    {% endif %}
+                                    {% if form.non_field_errors %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {% for error in form.non_field_errors %}
+                                            {{ error|escape }}<br>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <div class="form-row align-items-center">
+                                            <div class="col-sm-6 my-1">
+                                                <label class="col-form-label" for="id_username">Username</label>
+                                                <input type="text" class="form-control" name="username" required maxlength="254" id="id_username" disabled value="{{ username }}">
+                                            </div>
+                                            <div class="col-sm-6 my-1">
+                                                <label class="col-form-label" for="id_email">Email</label>
+                                                <input type="email" class="form-control" name="email" required maxlength="254" id="id_email" disabled value="{{ email }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-form-label" for="id_old_password">Old Password</label>
+                                            <input type="password" class="form-control" name="old_password" required maxlength="254" id="id_old_password">
+                                        </div>
+                                        {% if form.old_password.errors %}
+                                            <div class="form-gp" style="color: red;"><span>{{ form.old_password.errors.as_text }}</span></div>
+                                        {% endif %}
+                                        <div class="form-group">
+                                            <label class="col-form-label" for="id_new_password1">New Password</label>
+                                            <input type="password" class="form-control" name="new_password1" required maxlength="254" id="id_new_password1">
+                                        </div>
+                                        {% if form.new_password1.errors %}
+                                            <div class="form-gp" style="color: red;"><span>{{ form.new_password1.errors.as_text }}</span></div>
+                                        {% endif %}
+                                        <div class="form-group">
+                                            <label class="col-form-label" for="id_new_password2">New Password Confirmation</label>
+                                            <input type="password" class="form-control" name="new_password2" required maxlength="254" id="id_new_password2">
+                                        </div>
+                                        {% if form.new_password2.errors %}
+                                            <div class="form-gp" style="color: red"><span>{{ form.new_password2.errors.as_text }}</span></div>
+                                        {% endif %}
+                                        <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">Submit</button>
+                                        <a role="button" class="btn btn-secondary mt-4 pr-4 pl-4" href="{% url 'profile' %}">Back</a>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- basic form end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- main content area end -->
+        <!-- footer area start-->
+        <footer>
+            <div class="footer-area">
+                <p>© Copyright 2019. All right reserved.</p>
+            </div>
+        </footer>
+        <!-- footer area end-->
+    </div>
+    <!-- page container area end -->
+    {% include "../tickets/base/footer.html" %}
+
+</html>

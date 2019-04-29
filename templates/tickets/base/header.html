@@ -1,3 +1,27 @@
+{% load static %}
+<div class="mainheader-area">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-3">
+                <div class="logo">
+                    <a href="/"><img src="{% static 'dashboard/images/icon/logo2.png' %}" alt="logo"></a>
+                </div>
+            </div>
+            <!-- profile info & task notification -->
+            <div class="col-md-9 clearfix text-right">
+                <div class="clearfix d-md-inline-block d-block">
+                    <div class="user-profile m-0">
+                        <h4 class="user-name dropdown-toggle" data-toggle="dropdown">{{ user_name }} <i class="fa fa-angle-down"></i></h4>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{% url 'edit profile' %}">Settings</a>
+                            <a class="dropdown-item" href="/accounts/logout/">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- header area start -->
 <div class="header-area header-bottom">
     <div class="container">
@@ -6,20 +30,23 @@
                 <div class="horizontal-menu">
                     <nav>
                         <ul id="nav_menu">
-                            <li><a href="/"><i class="ti-home"></i><span>Home</span></a></li>
-                            <li><a href="{% url 'tickets list' %}"><i class="ti-view-list"></i><span>Ticket List</span></a></li>
-                            <li><a href="{% url 'add ticket' %}"><i class="ti-plus"></i><span>Add Ticket</span></a></li>
+                            <li>
+                                <div class="icon-container">
+                                    <a href="/"><span class="ti-home"></span><span class="icon-name"> Home</span></a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="icon-container">
+                                    <a href="{% url 'tickets list' %}"><span class="ti-view-list"></span><span class="icon-name"> Ticket List</span></a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="icon-container">
+                                    <a href="{% url 'add ticket' %}"><span class="ti-plus"></span><span class="icon-name"> Add Ticket</span></a>
+                                </div>
+                            </li>
                         </ul>
                     </nav>
-                </div>
-            </div>
-            <!-- nav and search button -->
-            <div class="col-lg-3 clearfix">
-                <div class="search-box">
-                    <form action="#">
-                        <input type="text" name="search" placeholder="Search..." required>
-                        <i class="ti-search"></i>
-                    </form>
                 </div>
             </div>
             <!-- mobile_menu -->

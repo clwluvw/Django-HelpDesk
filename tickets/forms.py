@@ -5,7 +5,18 @@ from django.conf import settings
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 
+def is_member(user, *group_names):
+    if user.is_authenticated:
+        if bool(user.groups.filter(name__in=group_names)) or user.is_superuser:
+            return True
+    return False  
+
 class TicketForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        return super().__init__(*args, **kwargs)
+
     def save(self, request):
         ticket = super().save(commit=False)
         if ticket.creator is None:
@@ -20,7 +31,12 @@ class TicketForm(ModelForm):
             if get_user_model().objects.get(id=cd.get('creator').id).groups.filter(name='clients').exists():
                 pass
             else:
-                raise ValidationError("Unknown Client")
+                raise ValidationError("Unknown Client Selected!")
+        else:
+            if is_member(self.request.user, 'supports'):
+                raise ValidationError("Unknown Client Selected!")
+            else:
+                cd['creator'] = self.request.user
         
         return cd
     
@@ -45,4 +61,4 @@ class CommentForm(ModelForm):
 
     class Meta:
         model = Comment
-        fields = ['comment', 'attach']
+        fields = ['comment']
