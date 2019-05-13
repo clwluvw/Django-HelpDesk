@@ -1,5 +1,6 @@
 # Help Desk system with Django framework
 A very simple help desk management system with Django framework
+
 Dockerized with Nginx and Gunicorn
 
 * All register users will automatically be client. If you want to add Support you should add registered user to `supports` group
