@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  helpdeskapp:
+    build: .
+    volumes:
+      - .:/opt/services/helpdeskapp/src
+      - static_volume:/opt/services/helpdeskapp/static
+      - media_volume:/opt/services/helpdeskapp/media
+    networks:
+      - nginx_network
+  
+  nginx:
+    image: nginx:latest
+    ports:
+      - 8000:80
+    volumes:
+      - ./config/nginx/conf.d:/etc/nginx/conf.d
+      - static_volume:/opt/services/helpdeskapp/static
+      - media_volume:/opt/services/helpdeskapp/media
+    depends_on:
+      - helpdeskapp
+    networks:
+      - nginx_network
+
+networks: 
+  nginx_network:
+    driver: bridge
+
+volumes:
+  static_volume:
+  media_volume:
